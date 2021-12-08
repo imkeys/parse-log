@@ -16,12 +16,12 @@
 
 访问日志解析： 给以行访问日志解析出对应字段，日志字段按顺序依次为：
 
-```
-level，time，sName用中括号
-statusCode，processTimes，responseSize为数字
-其他字段为字符串，如果字串不包含空格，可以不加引号，也可以加引号,
-未知数字值用0， 未知字符值用-
-```
+
++ level，time，sName用中括号
++ statusCode，processTimes，responseSize为数字
++ 其他字段为字符串，如果字串不包含空格，可以不加引号，也可以加引号,
++ 未知数字值用0， 未知字符值用-
+
 
 如：
 
@@ -55,12 +55,12 @@ statusCode，processTimes，responseSize为数字
 
 将读入字符的状态分为一下几种：
 
-```
-state0: 准备读入状态
-state1: 中括号开始
-state2: 双引号开始
-state3: 空格开始
-```
+
++ state0: 准备读入状态
++ state1: 中括号开始
++ state2: 双引号开始
++ state3: 空格开始
+
 
 ![](./src/assets/wx_20211208115356.png)
 
