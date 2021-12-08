@@ -19,44 +19,51 @@
 
 访问日志解析： 给以行访问日志解析出对应字段，日志字段按顺序依次为：
 
-  level，time，sName用中括号
-  statusCode，processTimes，responseSize为数字
-  其他字段为字符串，如果字串不包含空格，可以不加引号，也可以加引号,
-  未知数字值用0， 未知字符值用-
+```
+level，time，sName用中括号
+statusCode，processTimes，responseSize为数字
+其他字段为字符串，如果字串不包含空格，可以不加引号，也可以加引号,
+未知数字值用0， 未知字符值用-
+```
 
 如：
 
-  [INFO ][2021-11-28 16:08:07][info-api-center]72782 970bb699-368a-5260-a489-aad069942be8 0 "HTTP/1.1" "GET" info_api_center_v1 "/info-api-center/center-apis" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36" 200 19 941 202.10.23.14
+```
+[INFO ][2021-11-28 16:08:07][info-api-center]72782 970bb699-368a-5260-a489-aad069942be8 0 "HTTP/1.1" "GET" info_api_center_v1 "/info-api-center/center-apis" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36" 200 19 941 202.10.23.14
+```
 
 解析为：
 
-  {
-    "level": "INFO",
-    "time": "2021-11-28 16:08:07",
-    "sName": "info-api-center",
-    "userId": "72782",
-    "tid": "970bb699-368a-5260-a489-aad069942be8",
-    "rpcid": "0",
-    "protocol": "HTTP/1.1",
-    "method": "GET",
-    "host": "info_api_center_v1",
-    "url": "/info-api-center/center-apis",
-    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36",
-    "statusCode": "200",
-    "processTimes": "19",
-    "responseSize": "941",
-    "ip": "202.10.23.14"
-  }
+```
+{
+  "level": "INFO",
+  "time": "2021-11-28 16:08:07",
+  "sName": "info-api-center",
+  "userId": "72782",
+  "tid": "970bb699-368a-5260-a489-aad069942be8",
+  "rpcid": "0",
+  "protocol": "HTTP/1.1",
+  "method": "GET",
+  "host": "info_api_center_v1",
+  "url": "/info-api-center/center-apis",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36",
+  "statusCode": "200",
+  "processTimes": "19",
+  "responseSize": "941",
+  "ip": "202.10.23.14"
+}
+```
 
 先得到字段列表，字段有中括号包起，也有引号包起，也有空格分割，还存在没有任何起始字符。
 
 将读入字符的状态分为一下几种：
 
-  state0: 准备读入状态
-  state1: 中括号开始
-  state2: 双引号开始
-  state3: 空格开始
-
+```
+state0: 准备读入状态
+state1: 中括号开始
+state2: 双引号开始
+state3: 空格开始
+```
 
 ![](./src/assets/wx_20211208115356.png)
 
@@ -66,7 +73,9 @@ filebeat使用go编写，内部并非使用V8,支持的es5
 
 数字0~3分别代表一下几种状态，-1表示结束
 
-  state0: 准备读入状态
-  state1: 中括号开始
-  state2: 双引号开始
-  state3: 空格开始
+```
+state0: 准备读入状态
+state1: 中括号开始
+state2: 双引号开始
+state3: 空格开始
+```
