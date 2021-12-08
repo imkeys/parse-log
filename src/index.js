@@ -51,6 +51,7 @@ function parseLog (msg) {
   return result
 }
 
+console.log(logs.length + '条数据')
 logs.map(item => {
   let [level, time, sName, userId, tid, rpcid, protocol, method, host, url, ua, statusCode, processTimes, responseSize, ip] = parseLog(item)
   // console.log({
